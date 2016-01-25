@@ -57,8 +57,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CatalogDataSource.cs" />
+    <Compile Include="CatalogPage.cs" />
+    <Compile Include="CatalogTest.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">
