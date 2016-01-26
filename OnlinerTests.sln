@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Express 14 for Windows Desktop
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlinerTests", "OnlinerTests\OnlinerTests.csproj", "{684C7C4D-D3C1-49A4-BE39-4645CB0B8188}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlParser", "XmlParser\XmlParser.csproj", "{78F07DA0-5963-473F-973B-1BDF5ECB9599}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{684C7C4D-D3C1-49A4-BE39-4645CB0B8188}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{684C7C4D-D3C1-49A4-BE39-4645CB0B8188}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{684C7C4D-D3C1-49A4-BE39-4645CB0B8188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F07DA0-5963-473F-973B-1BDF5ECB9599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F07DA0-5963-473F-973B-1BDF5ECB9599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F07DA0-5963-473F-973B-1BDF5ECB9599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F07DA0-5963-473F-973B-1BDF5ECB9599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
