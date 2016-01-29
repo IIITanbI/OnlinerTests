@@ -7,12 +7,16 @@ using System.Xml.Linq;
 using System.Xml;
 namespace XmlParser
 {
-    public interface IHtml
+    public interface IHtmlGenerator
     {
-        XElement Generate(TestCase testSuite);
+        XElement Generate(TestCase testCase);
+    }
+    public interface IParsable
+    {
+        TestCase Parse(TestCase source, XElement xElement);
     }
 
-    public class Generator1 : IHtml
+    public class HtmlGenerator1 : IHtmlGenerator
     {
         public XElement Generate(TestCase testCase)
         {
@@ -75,7 +79,7 @@ namespace XmlParser
             return main;
         }
     }
-    public class Generator2 : IHtml
+    public class HtmlGenerator2 : IHtmlGenerator
     {
         public XElement Generate(TestCase testCase)
         {
@@ -142,26 +146,40 @@ namespace XmlParser
         }
     }
 
+    public class Parse1 : IParsable
+    {
+        public TestCase Parse(TestCase source, XElement testCase)
+        {
+            //TestCase tt = new TestCase();//= InitFromXElement(testCase);
+            TestCase tt = source;
+            tt.InitAttributeFromXElement(testCase);
+
+            string message = testCase.Element("failure")?.Element("message")?.Value;
+            tt.Message = message;
+            string stackTrace = testCase.Element("failure")?.Element("stack-trace")?.Value;
+            tt.StackTrace = stackTrace;
+
+            string reason = testCase.Element("reason")?.Element("message")?.Value;
+            tt.Reason = reason;
+
+            return tt;
+        }
+    }
+
     class Program
     {
         static Environment env { get; set;}
         static TestSuite TestFixture { get; set; }
-        static IHtml HtmlGenerator { get; set; }
+        static IHtmlGenerator HtmlGenerator { get; set; }
 
         static void Main(string[] args)
         {
             List<TestSuite> testFixtures = Parse("TestResult.xml");
-
-           
             var html = GenerateHtml(TestFixture);
-
-
+            
             XDocument doc = new XDocument();
             doc.Add(html);
             doc.Save("data.html");
-
-
-            
         }
 
         public static XElement GetTable(string[] headerNames)
@@ -275,7 +293,11 @@ namespace XmlParser
                 {
                     Console.WriteLine(ts.Attribute("name"));
                     var nTests = ts.Element("results").Elements("test-suite");
-                    TestSuite tt = TestSuite.ParseReportTestSuite(ts);
+
+                    //TestSuite tt = TestSuite.Parse(ts);
+                    TestSuite tt = new TestSuite();
+                    tt.Parse(ts);
+
                     testFixtures.Add(tt);
                     Console.WriteLine(tt.Name);
                 }

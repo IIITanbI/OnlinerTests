@@ -18,6 +18,9 @@ namespace XmlParser
 
         public string Reason { get; set; }
 
+        public abstract void InitAttributeFromXElement(XElement xElement);
+        public abstract void Parse(XElement xElement);
+      
         public abstract XElement GenerateHtml();
     }
 }

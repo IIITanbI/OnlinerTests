@@ -9,40 +9,60 @@ namespace XmlParser
 {
     public class TestCase : TestBase
     {
-
         public string Desription { get; set; }
         public string Message { get; set; }
         public string StackTrace { get; set; }
 
-        public IHtml HtmlGenerator { get; set; } = new Generator1();
+        public IHtmlGenerator HtmlGenerator { get; set; } = new HtmlGenerator1();
+        public IParsable Parsable { get; set; } = new Parse1();
 
-        public static TestCase InitFromXElement(XElement testCase)
+        public TestCase()
         {
-            TestCase tt = new TestCase()
-            {
-                Name = testCase.Attribute("name")?.Value,
-                Desription = testCase.Attribute("description")?.Value,
-                Executed = testCase.Attribute("executed")?.Value,
-                Result = testCase.Attribute("result")?.Value,
-                Success = testCase.Attribute("success")?.Value,
-                Time = testCase.Attribute("time")?.Value,
-                Asserts = testCase.Attribute("asserts")?.Value
-            };
 
-            return tt;
         }
-        public static TestCase ParseTestCase(XElement testCase)
+        public TestCase(XElement testCase)
         {
-            TestCase tt = InitFromXElement(testCase);
+            this.Parse(testCase);
+        }
 
-            string message = testCase.Element("failure")?.Element("message")?.Value;
-            tt.Message = message;
-            string stackTrace = testCase.Element("failure")?.Element("stack-trace")?.Value;
-            tt.StackTrace = stackTrace;
+        public override void InitAttributeFromXElement(XElement testCase)
+        {
+            this.Name = testCase.Attribute("name")?.Value;
+            this.Desription = testCase.Attribute("description")?.Value;
+            this.Executed = testCase.Attribute("executed")?.Value;
+            this.Result = testCase.Attribute("result")?.Value;
+            this.Success = testCase.Attribute("success")?.Value;
+            this.Time = testCase.Attribute("time")?.Value;
+            this.Asserts = testCase.Attribute("asserts")?.Value;
 
-            string reason = testCase.Element("reason")?.Element("message")?.Value;
-            tt.Reason = reason;
-            return tt;
+            //TestCase tt = new TestCase()
+            //{
+            //    Name = testCase.Attribute("name")?.Value,
+            //    Desription = testCase.Attribute("description")?.Value,
+            //    Executed = testCase.Attribute("executed")?.Value,
+            //    Result = testCase.Attribute("result")?.Value,
+            //    Success = testCase.Attribute("success")?.Value,
+            //    Time = testCase.Attribute("time")?.Value,
+            //    Asserts = testCase.Attribute("asserts")?.Value
+            //};
+
+            //return tt;
+        }
+        public override void Parse(XElement testCase)
+        {
+            Parsable.Parse(this, testCase);
+            
+
+            //this.InitAttributeFromXElement(testCase);
+            ////TestCase tt = InitFromXElement(testCase);
+
+            //string message = testCase.Element("failure")?.Element("message")?.Value;
+            //this.Message = message;
+            //string stackTrace = testCase.Element("failure")?.Element("stack-trace")?.Value;
+            //this.StackTrace = stackTrace;
+
+            //string reason = testCase.Element("reason")?.Element("message")?.Value;
+            //this.Reason = reason;
         }
 
         public override XElement GenerateHtml()
